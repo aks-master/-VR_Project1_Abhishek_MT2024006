@@ -32,7 +32,7 @@ dataset/
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/aks-master/-VR_Project1_Abhishek_MT2024006.git cd project
+    git clone https://github.com/aks-master/-VR_Project1_Abhishek_MT2024006.git
     ```
 
 2. Create a new Anaconda environment and install the required packages:
