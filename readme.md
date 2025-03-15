@@ -74,17 +74,16 @@ dataset/
 
 ## Results
 
-- **SVM Classifier**:
-    - Accuracy: 0.9304
+## Results
 
-- **Neural Network Classifier**:
-    - Accuracy: 0.8950
+### Comparison of Models:
 
-- **CNN Model 1 (Adam, deeper layers)**:
-    - Accuracy: 0.9328
-
-- **CNN Model 2 (SGD, batch norm)**:
-    - Accuracy: 0.7155
+| Model                      | Accuracy |
+|----------------------------|----------|
+| Model 1 SVC                | 0.9304   |
+| Model 2 MLP neural network | 0.9035   |
+| Model 1 (Adam)             | 0.9341   |
+| Model 2 (SGD, batch norm)  | 0.7961   |
 
 ## Conclusion
 
