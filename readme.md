@@ -27,6 +27,7 @@ dataset/
 - scikit-learn
 - scikit-image
 - TensorFlow
+- tabulate
 
 ## Installation
 
