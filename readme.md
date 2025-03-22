@@ -5,6 +5,7 @@
 -- Naval Kishore Singh Bisht (MT2024099)
 
 ---
+# for classification 
 
 This part of project aims to classify images of faces as "with mask" or "without mask" using various machine learning and deep learning techniques.
 
@@ -167,3 +168,175 @@ The dataset consists of images categorized into two folders: `with_mask` and `wi
 2. Open the Jupyter Notebook `classification( Part A B).ipynb`.
 3. Run the cells sequentially to execute the code for feature extraction, model training, and evaluation.
 4. The results will be displayed in the notebook, including accuracy and confusion matrices for each model.
+
+
+---
+ # for segmentation
+
+## Face Mask Segmentation Using Traditional Techniques and U-Net
+
+## Overview
+
+This project implements face mask segmentation using both traditional techniques (Otsu’s thresholding) and deep learning (U-Net) as part of the Face Mask Detection, Classification, and Segmentation project. The pipeline preprocesses images, applies traditional segmentation, trains a U-Net model, and compares the performance of both methods using IoU (Intersection over Union) scores. The project is implemented in a Jupyter Notebook (`task_3_and_4.ipynb`) using Python, OpenCV, TensorFlow, and Matplotlib.
+
+### Objectives
+
+- **Task a**: Preprocess images and masks (convert to grayscale, resize to 64x64).
+- **Task b**: Apply traditional segmentation using Otsu’s thresholding.
+- **Task c**: Train a U-Net model for mask segmentation.
+- **Task d**: Compare traditional and U-Net segmentation using IoU, with visualizations.
+
+## Requirements
+
+To run this project, you need the following dependencies installed:
+
+- Python 3.12.3 (or compatible version)
+- Jupyter Notebook
+- Libraries:
+  - `numpy`
+  - `opencv-python` (cv2)
+  - `matplotlib`
+  - `tensorflow` (2.x)
+  - `scikit-image` (optional, for additional image processing if needed)
+
+You can install the dependencies using pip:
+
+```bash
+pip install numpy opencv-python matplotlib tensorflow scikit-image
+```
+
+## Dataset
+
+The project uses the MFSD dataset, available at [https://github.com/sadjadrz/MFSD](https://github.com/sadjadrz/MFSD). Ensure the following folders from the dataset are placed in the project directory:  
+On doing the dataset it will download MSFD file in zip.  
+Unzip it and inside that folder there are two folder named 1 and 2.  
+Go in 1 and there are two folder that we need face_crop and face_crop_segmentation .  
+For ease we have renamed face_crop to mask and face_crop_segmentation to s_mask.
+
+Move these two folder to Task_3_and_4.
+
+- `mask/`: Contains the original masked images (e.g., `000001_1.jpg`).
+- `s_mask/`: Contains the corresponding ground truth binary masks with the same filenames (e.g., `000001_1.jpg`).
+
+## Directory Structure
+
+The project expects the following directory structure:
+
+```
+├── mask/                    # Original masked images (e.g., 000001_1.jpg)
+├── s_mask/                  # Ground truth binary masks (e.g., 000001_1.jpg)
+├── P_mask/                  # Preprocessed grayscale images (e.g., gray_000001_1.jpg) [Created by script]
+├── P_s_mask/                # Preprocessed ground truth masks (e.g., mask_000001_1.jpg) [Created by script]
+├── Traditional_Segmented/   # Traditional segmentation outputs (e.g., seg_gray_000001_1.jpg) [Created by script]
+├── unet_model.h5            # Trained U-Net model [Created by script]
+├── task_3_and_4.ipynb           # Main Jupyter Notebook with the pipeline for segmentation
+```
+
+Note : If other than mask and p_mask is not present then on doing the task they will be automatically created .
+
+### Output Data
+
+- `P_mask/`: Preprocessed grayscale images (e.g., `gray_000001_1.jpg`).
+- `P_s_mask/`: Preprocessed ground truth masks (e.g., `mask_000001_1.jpg`).
+- `Traditional_Segmented/`: Traditional segmentation results (e.g., `seg_gray_000001_1.jpg`).
+- `unet_model.h5`: Trained U-Net model.
+
+## How to Run
+
+1. **Set Up the Environment**:
+
+   - Ensure all dependencies are installed (see Requirements).
+   - Place the `mask/` and `s_mask/` folders from the MFSD dataset in the project directory.
+
+2. **Run the Jupyter Notebook**:
+   - Open the `task_3_and_4.ipynb` notebook in Jupyter:
+     ```bash
+     jupyter notebook task_3_and_4.ipynb
+     ```
+   - Run all cells sequentially. The notebook is structured into the following sections:
+     - **Preprocessing**: Converts images to grayscale and resizes them to 64x64.
+     - **Traditional Segmentation**: Applies Otsu’s thresholding to preprocessed images.
+     - **U-Net Training**: Loads data, defines the U-Net model, trains it, and plots training/validation loss and accuracy.
+     - **Comparison of Traditional and U-Net Segmentation**: Compares both methods on 5 random images using IoU scores.
+
+## Expected Output
+
+The notebook will produce the following outputs:
+
+1.  **Console Output**:
+
+    - **Preprocessing**:
+      - Number of processed images (e.g., "Preprocessing complete. Processed 9382 images.").
+    - **Traditional Segmentation**:
+
+      - ✅ Traditional segmentation complete. Processed 9383 images.
+
+      - ✅ Traditional segmentation complete. Segmented images saved in C:\Users\Naval Kishore\Desktop\vr_mini\Task_3_and_4\Traditional_Segmented
+
+    - **U-Net Training**:
+      - ✅ Loaded 9382 image pairs for training.
+      - Starting training with 9382 images, batch size 64
+      - ✅ Model saved to C:\Users\NavalKishore\Desktop\vr_mini\Task_3_and_4\unet_model.h5
+    - **Comparison**: - ✅ Loaded U-Net model from C:\Users\Naval Kishore\Desktop\vr_mini\Task_3_and_4\unet_model.h5
+      Selected 5 random images for comparison: ['mask_001597_1.jpg', 'mask_004231_1.jpg', 'mask_001606_1.jpg', 'mask_004660_1.jpg', 'mask_007652_1.jpg']
+
+           - ✅ Average IoU for Traditional Segmentation (over 5 images): 0.3024
+           - ✅ Average IoU for U-Net Segmentation (over 5 images): 0.8919
+           - Difference (U-Net - Traditional): 0.5895
+
+2.  **Visualizations**:
+
+    - **Training Plots**: Loss and accuracy over epochs for the U-Net training (after the training step).
+      - Left subplot: Training and validation loss.
+      - Right subplot: Training and validation accuracy.
+    - **Comparison**: For 5 random images, a figure with:
+      - Original image.
+      - Ground truth mask.
+      - Traditional segmented mask.
+      - Traditional IoU difference map (red for missed regions, blue for over-segmented regions).
+      - U-Net segmented mask.
+      - U-Net IoU difference map.
+
+3.  **Files**:
+    - Preprocessed images and masks in `P_mask/` and `P_s_mask/`.
+    - Traditional segmentation results in `Traditional_Segmented/`.
+    - Trained U-Net model saved as `unet_model.h5`.
+
+### Screenshots of Outputs
+
+Below are placeholders for screenshots of the key outputs generated by the notebook. Replace the placeholder paths with the actual paths to your saved screenshots.
+
+#### 1. U-Net Training Plots (Loss and Accuracy)
+
+This figure shows the training and validation loss and accuracy over epochs for the U-Net model.
+
+![U-Net Training Plots](ss/4.png)
+
+#### 2. Traditional Segmentation Evaluation
+
+This figure shows an example of the traditional segmentation evaluation for one image, including the ground truth mask, traditional segmented mask, and IoU difference map.
+
+![Traditional Segmentation Example](ss/5.png)
+
+#### 3. U-Net Segmentation Evaluation
+
+This figure shows an example of the U-Net segmentation evaluation for one image, including the ground truth mask, U-Net segmented mask, and IoU difference map.
+
+![U-Net Segmentation Example](ss/6.png)
+
+#### 4. Comparison of Traditional and U-Net Segmentation
+
+This figure shows the comparison for one of the 5 random images, including the original image, ground truth, traditional segmentation, traditional IoU difference map, U-Net segmentation, and U-Net IoU difference map.
+
+![Comparison Example](ss/7.png)
+
+## Notes
+
+- The U-Net is trained with a batch size of 64, 10 epochs, and a 20% validation split, as specified in the notebook. Adjust these parameters in the `train_and_predict` function .
+- The comparison step evaluates 5 random images. Change the `n` parameter in `compare_segmentation_results` to evaluate more or fewer images.
+
+## Submitted By
+
+Naval Kishore singh bisht and Abhishek kumar singh
+
+---
